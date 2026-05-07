@@ -16,6 +16,8 @@ export default function Difference() {
           muted 
           loop 
           playsInline 
+          preload="metadata"
+          poster="/promo-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         >
           <source src="/promo-video.mp4" type="video/mp4" />

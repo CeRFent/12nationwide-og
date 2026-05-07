@@ -3,13 +3,15 @@ import { motion } from 'framer-motion';
 
 export default function Hero({ isLoading }) {
   return (
-    <section id="hero" className="relative h-screen min-h-[640px] flex items-center justify-center text-center overflow-hidden">
+    <section id="hero" className="relative h-screen min-h-[640px] flex items-center justify-center text-center overflow-hidden bg-brand-bg">
       {/* BACKGROUND VIDEO */}
       <video 
         autoPlay 
         muted 
         loop 
         playsInline 
+        preload="auto"
+        poster="/hero-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="/hero-video.mp4" type="video/mp4" />

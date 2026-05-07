@@ -20,6 +20,8 @@ export default function Social() {
             muted 
             loop 
             playsInline 
+            preload="metadata"
+            poster="/social-1-poster.jpg"
             className="absolute inset-0 w-full h-full object-cover z-0"
           >
             <source src="/social-1.mp4" type="video/mp4" />
@@ -32,6 +34,8 @@ export default function Social() {
             muted 
             loop 
             playsInline 
+            preload="metadata"
+            poster="/social-2-poster.jpg"
             className="absolute inset-0 w-full h-full object-cover z-0"
           >
             <source src="/social-2.mp4" type="video/mp4" />
