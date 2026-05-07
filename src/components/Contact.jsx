@@ -41,7 +41,7 @@ export default function Contact() {
         className="bg-brand-card border border-brand-card-border rounded-[6px] p-6 md:p-10 shadow-[0_0_60px_rgba(0,0,0,0.4)]"
       >
         <form 
-          action="https://formspree.io/f/YOUR_FORM_ID" 
+          action="https://formspree.io/f/xojrlgll" 
           method="POST"
           className="space-y-5"
         >
