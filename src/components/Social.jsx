@@ -16,13 +16,13 @@ export default function Social() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[900px] mx-auto mb-10">
         <div 
           className="aspect-[9/7] bg-brand-card bg-center bg-cover bg-no-repeat rounded-[6px] relative border border-brand-card-border overflow-hidden group transition-all hover:border-brand-cyan/40"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1553413077-190dd305871c?w=800&q=80')` }}
+          style={{ backgroundImage: `url('/assets/social-1.jpg')` }}
         >
           <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent" />
         </div>
         <div 
           className="aspect-[9/7] bg-brand-card bg-center bg-cover bg-no-repeat rounded-[6px] relative border border-brand-card-border overflow-hidden group transition-all hover:border-brand-cyan/40"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80')` }}
+          style={{ backgroundImage: `url('/assets/social-2.jpg')` }}
         >
           <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent" />
         </div>

@@ -6,9 +6,9 @@ export default function Hero({ isLoading }) {
     <section id="hero" className="relative h-screen min-h-[640px] flex items-center justify-center text-center overflow-hidden">
       {/* BACKGROUND */}
       <div 
-        className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+        className="absolute inset-0 bg-center bg-cover bg-no-repeat transition-all duration-700"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(26,28,34,0.65) 0%, rgba(26,28,34,0.2) 50%, rgba(26,28,34,0.88) 100%), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80')`
+          backgroundImage: `linear-gradient(to bottom, rgba(26,28,34,0.65) 0%, rgba(26,28,34,0.2) 50%, rgba(26,28,34,0.88) 100%), url('/assets/hero-bg.jpg')`
         }}
       />
 

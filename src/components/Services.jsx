@@ -5,17 +5,17 @@ const services = [
   {
     title: "On-Demand Courier",
     description: "Urgent, time-sensitive deliveries handled with precision. From legal documents to medical supplies — we move what matters, when it matters.",
-    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80"
+    image: "/assets/service-1.jpg"
   },
   {
     title: "Last-Mile Delivery",
     description: "Reliable last-mile logistics connecting your business to your customers. Scheduled routes and dedicated runs tailored to your operation.",
-    image: "https://images.unsplash.com/photo-1519003300449-424ad0405076?w=800&q=80"
+    image: "/assets/service-2.jpg"
   },
   {
     title: "Cargo Van Freight",
     description: "Larger loads, same reliability. Our cargo vans handle oversized packages, pallets, and freight runs that standard carriers won't take.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80"
+    image: "/assets/service-3.jpg"
   }
 ];
 

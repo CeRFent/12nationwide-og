@@ -11,12 +11,17 @@ export default function Difference() {
         viewport={{ once: true }}
         className="relative rounded-[6px] overflow-hidden aspect-video bg-[#111] shadow-[0_0_60px_rgba(0,229,255,0.1)] border border-brand-cyan/15 group cursor-pointer"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-brand-bg to-brand-card flex flex-col items-center justify-center gap-4 text-white/35 transition-colors group-hover:text-brand-cyan/60">
-          <svg className="w-14 h-14 fill-brand-cyan/40 group-hover:fill-brand-cyan transition-colors" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-          <p className="font-display text-[13px] tracking-[2px] uppercase">Video — Powered by Veo</p>
-        </div>
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        >
+          <source src="/assets/promo-video.mp4" type="video/mp4" />
+        </video>
+        {/* Overlay if video is missing or loading */}
+        <div className="absolute inset-0 bg-linear-to-br from-brand-bg/40 to-brand-card/40 pointer-events-none" />
       </motion.div>
 
       {/* CONTENT */}
