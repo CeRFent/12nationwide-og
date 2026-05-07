@@ -46,11 +46,12 @@ export default function Contact() {
             <label className="block font-display font-bold text-[12px] tracking-[1.5px] uppercase text-white/55">Service Needed</label>
             <select className="w-full bg-brand-bg/70 border border-white/12 p-[14px_16px] font-body text-[14px] text-brand-white outline-none rounded-[3px] focus:border-brand-accent focus:shadow-[0_0_12px_rgba(255,215,0,0.15)] transition-all">
               <option value="">Select a service...</option>
-              <option>On-Demand Courier</option>
-              <option>Last-Mile Delivery</option>
-              <option>Cargo Van Freight</option>
-              <option>Corporate/Business Account</option>
-              <option>Other</option>
+              <option>Scheduled delivery</option>
+              <option>Moving services</option>
+              <option>Furniture pickup</option>
+              <option>Junk removal</option>
+              <option>Medical delivery</option>
+              <option>other</option>
             </select>
           </div>
           <div className="space-y-2">

@@ -3,18 +3,33 @@ import { motion } from 'framer-motion';
 
 const services = [
   {
-    title: "On-Demand Courier",
-    description: "Urgent, time-sensitive deliveries handled with precision. From legal documents to medical supplies — we move what matters, when it matters.",
+    title: "Courier Service",
+    description: "Fast, secure, and reliable same-day delivery for documents, parcels, and time-critical items across the region.",
     image: "/service-1.jpg"
   },
   {
-    title: "Last-Mile Delivery",
-    description: "Reliable last-mile logistics connecting your business to your customers. Scheduled routes and dedicated runs tailored to your operation.",
+    title: "White Glove Delivery",
+    description: "Premium handling for high-value items, including inside delivery, professional unpacking, and debris removal.",
     image: "/service-2.jpg"
   },
   {
-    title: "Cargo Van Freight",
-    description: "Larger loads, same reliability. Our cargo vans handle oversized packages, pallets, and freight runs that standard carriers won't take.",
+    title: "Junk Removal",
+    description: "Efficient hauling and responsible disposal of unwanted items from residential or commercial properties.",
+    image: "/service-3.jpg"
+  },
+  {
+    title: "Small Moving",
+    description: "Perfect for apartments, studios, or small offices needing professional transport without full-size moving truck costs.",
+    image: "/service-1.jpg"
+  },
+  {
+    title: "Medical Logistics",
+    description: "Specialized transport for medical equipment, specimens, and supplies with strict adherence to safety and timing.",
+    image: "/service-2.jpg"
+  },
+  {
+    title: "Contract Delivery Routes",
+    description: "Dedicated recurring delivery solutions for businesses needing consistent last-mile or inter-office transport.",
     image: "/service-3.jpg"
   }
 ];
@@ -31,7 +46,7 @@ export default function Services() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1200px] mx-auto text-left">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1200px] mx-auto text-left">
         {services.map((service, i) => (
           <motion.div
             key={i}

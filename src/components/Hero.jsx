@@ -40,7 +40,7 @@ export default function Hero({ isLoading }) {
 
         {/* SUBTITLE */}
         <p className="font-display font-semibold text-[17px] md:text-[20px] tracking-[4px] md:tracking-[8px] uppercase text-white/70 mb-8 md:mb-12">
-          Courier · On-Demand Delivery · Cargo Van
+          Courier · On-Demand Delivery · Based in Orlando, FL
         </p>
 
         {/* CTA */}
