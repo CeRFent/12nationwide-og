@@ -20,9 +20,9 @@ export default function Social() {
             muted 
             loop 
             playsInline 
-            preload="metadata"
-            poster="/social-1-poster.jpg"
-            className="absolute inset-0 w-full h-full object-cover z-0"
+            preload="none"
+            onMouseOver={(e) => e.target.play()}
+            className="absolute inset-0 w-full h-full object-cover z-0 bg-[#1a1c22]"
           >
             <source src="/social-1.mp4" type="video/mp4" />
           </video>
@@ -34,9 +34,9 @@ export default function Social() {
             muted 
             loop 
             playsInline 
-            preload="metadata"
-            poster="/social-2-poster.jpg"
-            className="absolute inset-0 w-full h-full object-cover z-0"
+            preload="none"
+            onMouseOver={(e) => e.target.play()}
+            className="absolute inset-0 w-full h-full object-cover z-0 bg-[#1a1c22]"
           >
             <source src="/social-2.mp4" type="video/mp4" />
           </video>

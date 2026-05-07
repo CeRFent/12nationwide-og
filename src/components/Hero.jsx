@@ -10,11 +10,12 @@ export default function Hero({ isLoading }) {
         muted 
         loop 
         playsInline 
-        preload="auto"
-        poster="/hero-poster.jpg"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        preload="none"
+        poster="/hero-poster.png"
+        onCanPlay={(e) => e.target.play()}
+        className="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000"
       >
-        <source src="/hero-video.mp4" type="video/mp4" />
+        <source src="/Hero-Video.mp4" type="video/mp4" />
       </video>
 
       {/* GRADIENT OVERLAY */}

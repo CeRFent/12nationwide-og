@@ -5,32 +5,32 @@ const services = [
   {
     title: "Courier Service",
     description: "Fast, secure, and reliable same-day delivery for documents, parcels, and time-critical items across the region.",
-    image: "/service-1.jpg"
+    image: "https://images.unsplash.com/photo-1620455805821-742f3fdb6bc2?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "White Glove Delivery",
     description: "Premium handling for high-value items, including inside delivery, professional unpacking, and debris removal.",
-    image: "/service-2.jpg"
+    image: "https://images.unsplash.com/photo-1581578731522-aa7a10738600?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "Junk Removal",
     description: "Efficient hauling and responsible disposal of unwanted items from residential or commercial properties.",
-    image: "/service-3.jpg"
+    image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "Small Moving",
     description: "Perfect for apartments, studios, or small offices needing professional transport without full-size moving truck costs.",
-    image: "/service-1.jpg"
+    image: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "Medical Logistics",
     description: "Specialized transport for medical equipment, specimens, and supplies with strict adherence to safety and timing.",
-    image: "/service-2.jpg"
+    image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "Contract Delivery Routes",
     description: "Dedicated recurring delivery solutions for businesses needing consistent last-mile or inter-office transport.",
-    image: "/service-3.jpg"
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
   }
 ];
 
