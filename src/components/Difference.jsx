@@ -11,16 +11,16 @@ export default function Difference() {
         viewport={{ once: true }}
         className="relative rounded-[6px] overflow-hidden aspect-video bg-[#111] shadow-[0_0_60px_rgba(0,229,255,0.1)] border border-brand-cyan/15 group cursor-pointer"
       >
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
-          preload="metadata"
-          poster="/promo-poster.jpg"
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          poster="/promo-poster.png"
+          onCanPlay={(e) => e.target.play()}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-        >
-          <source src="/promo-video.mp4" type="video/mp4" />
+        >          <source src="/promo-video.mp4" type="video/mp4" />
         </video>
         {/* Overlay if video is missing or loading */}
         <div className="absolute inset-0 bg-linear-to-br from-brand-bg/40 to-brand-card/40 pointer-events-none" />
