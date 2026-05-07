@@ -61,15 +61,7 @@ export default function Tracking() {
             REAL-TIME UPDATES
           </span>
           <h2 className="font-display text-6xl md:text-[72px] text-[#F2F4F5] leading-none uppercase flex justify-center flex-wrap">
-            {headingText.split('').map((char, i) => (
-              <span 
-                key={i} 
-                className="char inline-block"
-                style={{ whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-              >
-                {char}
-              </span>
-            ))}
+            12 NATIONWIDE TRACKING
           </h2>
         </div>
 
