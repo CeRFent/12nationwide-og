@@ -5,9 +5,11 @@ export default function Footer() {
     <>
       <footer className="bg-[#0d0e12] px-6 md:px-[60px] py-[70px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 border-t border-brand-accent/12">
         <div className="text-left">
-          <div className="w-[56px] h-[56px] bg-linear-to-br from-brand-accent to-[#e6c200] rounded-full flex items-center justify-center font-display font-black text-[16px] text-brand-bg tracking-[0.5px] border-2 border-white/20 shadow-[0_0_20px_rgba(255,215,0,0.4)] mb-[18px]">
-            12N
-          </div>
+          <img 
+            src="/assets/logo.png" 
+            alt="12 Nationwide Logo" 
+            className="h-[60px] md:h-[70px] w-auto mb-[18px] drop-shadow-[0_0_15px_rgba(255,215,0,0.2)]"
+          />
           <div className="font-display font-extrabold text-[15px] tracking-[1px] uppercase text-brand-white mb-2.5">
             Built to Deliver. Built Nationwide.
           </div>

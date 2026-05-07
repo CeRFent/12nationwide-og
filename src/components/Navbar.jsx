@@ -75,10 +75,12 @@ export default function Navbar() {
         </div>
 
         {/* LOGO */}
-        <a href="#hero" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-[10px] no-underline">
-          <div className="w-[46px] h-[46px] bg-linear-to-br from-brand-accent to-[#e6c200] rounded-full flex items-center justify-center font-display font-black text-[13px] text-brand-bg tracking-[0.5px] border-2 border-white/20 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
-            12N
-          </div>
+        <a href="#hero" className="absolute left-1/2 -translate-x-1/2 flex items-center no-underline group">
+          <img 
+            src="/assets/logo.png" 
+            alt="12 Nationwide Logo" 
+            className="h-[50px] md:h-[60px] w-auto transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
+          />
         </a>
 
         {/* NAV RIGHT */}
