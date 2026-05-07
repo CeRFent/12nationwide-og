@@ -21,8 +21,14 @@ export default function Footer() {
         <div className="text-left">
           <h4 className="font-display font-bold text-[11px] tracking-[2.5px] uppercase text-white/30 mb-[18px]">Quick Links</h4>
           <div className="flex flex-col gap-2.5">
-            {['Home', 'About', 'Services', 'Get a Quote', 'Contact'].map((item) => (
-              <a key={item} href="#" className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item}</a>
+            {[
+              { name: 'Home', href: '#hero' },
+              { name: 'About', href: '#why' },
+              { name: 'Services', href: '#services' },
+              { name: 'Get a Quote', href: '#contact' },
+              { name: 'Contact', href: '#contact' }
+            ].map((item) => (
+              <a key={item.name} href={item.href} className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item.name}</a>
             ))}
           </div>
         </div>

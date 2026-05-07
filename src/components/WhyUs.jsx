@@ -34,19 +34,7 @@ export default function WhyUs() {
         <h2 className="font-display font-black text-[clamp(32px,4vw,56px)] leading-none uppercase text-brand-white mb-9">
           Why Businesses & Individuals Choose Us
         </h2>
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex items-center gap-[14px] bg-brand-accent/5 border border-brand-accent/20 p-[18px_22px] rounded-[4px] max-w-fit"
-        >
-          <div className="w-[52px] h-[52px] bg-linear-to-br from-brand-accent to-[#e6c200] rounded-[4px] flex items-center justify-center shrink-0">
-            <svg className="w-[26px] h-[26px] fill-brand-bg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-          </div>
-          <p className="font-display font-bold text-[13px] tracking-[1.5px] uppercase text-brand-white">
-            Fully Insured & Licensed Nationwide
-          </p>
-        </motion.div>
+
       </div>
 
       <div className="flex flex-col gap-4">
