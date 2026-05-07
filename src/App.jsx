@@ -82,14 +82,12 @@ function AppContent({ isLoading }) {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const hasLoaded = sessionStorage.getItem('12nw_loaded');
-    if (hasLoaded) {
-      setIsLoading(false);
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('12nw_loaded');
     }
-  }, []);
+    return true;
+  });
 
   const handleComplete = useCallback(() => {
     sessionStorage.setItem('12nw_loaded', 'true');

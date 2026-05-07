@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Social() {
   return (
     <section id="social" className="bg-brand-bg px-6 md:px-[60px] py-[100px] text-center">

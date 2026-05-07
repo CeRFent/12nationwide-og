@@ -1,5 +1,3 @@
-import React from 'react';
-
 const testimonials = [
   {
     quote: "They picked up our freight within the hour and delivered cross-state before our deadline. Absolutely the most reliable carrier we've used.",

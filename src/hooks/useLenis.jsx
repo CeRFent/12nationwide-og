@@ -20,13 +20,19 @@ export const LenisProvider = ({ children, options = {} }) => {
       infinite: false,
     });
 
+    const raf = (time) => {
+      instance.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
     setLenis(instance);
 
     return () => {
       instance.destroy();
       setLenis(null);
     };
-  }, []);
+  }, [options]);
 
   return (
     <LenisContext.Provider value={lenis}>
