@@ -14,17 +14,29 @@ export default function Social() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[900px] mx-auto mb-10">
-        <div 
-          className="aspect-[9/7] bg-brand-card bg-center bg-cover bg-no-repeat rounded-[6px] relative border border-brand-card-border overflow-hidden group transition-all hover:border-brand-cyan/40"
-          style={{ backgroundImage: `url('/assets/social-1.jpg')` }}
-        >
-          <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent" />
+        <div className="aspect-[9/7] bg-brand-card rounded-[6px] relative border border-brand-card-border overflow-hidden group transition-all hover:border-brand-cyan/40">
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src="/assets/social-1.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent z-[1]" />
         </div>
-        <div 
-          className="aspect-[9/7] bg-brand-card bg-center bg-cover bg-no-repeat rounded-[6px] relative border border-brand-card-border overflow-hidden group transition-all hover:border-brand-cyan/40"
-          style={{ backgroundImage: `url('/assets/social-2.jpg')` }}
-        >
-          <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent" />
+        <div className="aspect-[9/7] bg-brand-card rounded-[6px] relative border border-brand-card-border overflow-hidden group transition-all hover:border-brand-cyan/40">
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src="/assets/social-2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent z-[1]" />
         </div>
       </div>
 
