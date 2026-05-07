@@ -5,12 +5,12 @@ const services = [
   {
     title: "Courier Service",
     description: "Fast, secure, and reliable same-day delivery for documents, parcels, and time-critical items across the region.",
-    image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&q=80&w=800"
+    image: "/courier-service.png"
   },
   {
     title: "White Glove Delivery",
     description: "Premium handling for high-value items, including inside delivery, professional unpacking, and debris removal.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"
+    image: "/white-glove.png"
   },
   {
     title: "Junk Removal",
