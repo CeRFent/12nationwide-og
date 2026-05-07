@@ -60,12 +60,13 @@ export default function Preloader({ onComplete }) {
       ref={overlayRef}
       className="fixed inset-0 bg-brand-bg z-[9999] flex flex-col items-center justify-center overflow-hidden"
     >
-      <div className="text-center">
-        <div 
-          ref={logoRef}
-          className="font-display text-[120px] leading-none text-brand-white uppercase mb-2 font-black"
-        >
-          12
+      <div className="text-center flex flex-col items-center">
+        <div ref={logoRef} className="mb-6">
+          <img 
+            src="/logo.png" 
+            alt="12 Nationwide Logo" 
+            className="h-[80px] md:h-[100px] w-auto drop-shadow-[0_0_20px_rgba(255,215,0,0.3)]"
+          />
         </div>
         <div 
           ref={brandRef}

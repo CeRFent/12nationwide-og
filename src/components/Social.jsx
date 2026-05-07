@@ -22,7 +22,7 @@ export default function Social() {
             playsInline 
             className="absolute inset-0 w-full h-full object-cover z-0"
           >
-            <source src="/assets/social-1.mp4" type="video/mp4" />
+            <source src="/social-1.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent z-[1]" />
         </div>
@@ -34,7 +34,7 @@ export default function Social() {
             playsInline 
             className="absolute inset-0 w-full h-full object-cover z-0"
           >
-            <source src="/assets/social-2.mp4" type="video/mp4" />
+            <source src="/social-2.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-linear-to-t from-brand-bg/60 to-transparent z-[1]" />
         </div>

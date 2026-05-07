@@ -18,7 +18,7 @@ export default function Difference() {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         >
-          <source src="/assets/promo-video.mp4" type="video/mp4" />
+          <source src="/promo-video.mp4" type="video/mp4" />
         </video>
         {/* Overlay if video is missing or loading */}
         <div className="absolute inset-0 bg-linear-to-br from-brand-bg/40 to-brand-card/40 pointer-events-none" />

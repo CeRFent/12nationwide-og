@@ -12,7 +12,7 @@ export default function Hero({ isLoading }) {
         playsInline 
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="/assets/hero-video.mp4" type="video/mp4" />
+        <source src="/hero-video.mp4" type="video/mp4" />
       </video>
 
       {/* GRADIENT OVERLAY */}
@@ -31,7 +31,7 @@ export default function Hero({ isLoading }) {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={isLoading ? {} : { scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
-          src="/assets/overlay-hero-logo.png" 
+          src="/overlay-hero-logo.png" 
           alt="12 Nationwide" 
           className="max-w-[320px] md:max-w-[600px] w-full h-auto mb-6 drop-shadow-[0_0_40px_rgba(255,215,0,0.2)]"
         />

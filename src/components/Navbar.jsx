@@ -77,7 +77,7 @@ export default function Navbar() {
         {/* LOGO */}
         <a href="#hero" className="absolute left-1/2 -translate-x-1/2 flex items-center no-underline group">
           <img 
-            src="/assets/logo.png" 
+            src="/logo.png" 
             alt="12 Nationwide Logo" 
             className="h-[50px] md:h-[60px] w-auto transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
           />

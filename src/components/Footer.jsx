@@ -6,7 +6,7 @@ export default function Footer() {
       <footer className="bg-[#0d0e12] px-6 md:px-[60px] py-[70px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 border-t border-brand-accent/12">
         <div className="text-left">
           <img 
-            src="/assets/logo.png" 
+            src="/logo.png" 
             alt="12 Nationwide Logo" 
             className="h-[60px] md:h-[70px] w-auto mb-[18px] drop-shadow-[0_0_15px_rgba(255,215,0,0.2)]"
           />
