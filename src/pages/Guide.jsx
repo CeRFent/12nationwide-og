@@ -111,7 +111,7 @@ export default function Guide() {
           <motion.a 
             whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(255,215,0,0.5)' }}
             whileTap={{ scale: 0.95 }}
-            href="#buy" 
+            href="https://buy.stripe.com/test_fZu5kDfXzc1eb4683253O00" 
             className="inline-block font-display font-bold text-lg tracking-[2px] uppercase text-brand-bg bg-brand-accent px-12 py-5 no-underline shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all"
           >
             Download Now — $27
@@ -281,7 +281,7 @@ export default function Guide() {
           <motion.a 
             whileHover={{ scale: 1.05, boxShadow: '0 0 60px rgba(255,215,0,0.6)' }}
             whileTap={{ scale: 0.95 }}
-            href="YOUR_PAYMENT_LINK_HERE" 
+            href="https://buy.stripe.com/test_fZu5kDfXzc1eb4683253O00" 
             className="inline-block font-display font-bold text-xl tracking-[3px] uppercase text-brand-bg bg-brand-accent px-16 py-6 no-underline shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-all"
           >
             Get Instant Access →

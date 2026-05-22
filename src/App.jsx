@@ -13,6 +13,7 @@ import './styles/globals.css';
 // Pages
 import Home from './pages/Home';
 const Guide = lazy(() => import('./pages/Guide'));
+const Success = lazy(() => import('./pages/Success'));
 const Footer = lazy(() => import('./components/Footer'));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -66,6 +67,14 @@ function AppContent({ isLoading }) {
             element={
               <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
                 <Guide />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/success" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <Success />
               </Suspense>
             } 
           />
