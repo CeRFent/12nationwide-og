@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 
 const navLinksLeft = [
-  { name: 'About', href: '#why' },
-  { name: 'Services', href: '#services' },
+  { name: 'About', href: '/#why' },
+  { name: 'Services', href: '/#services' },
+  { name: 'Get The Guide', href: '/guide' },
 ];
 
 const navLinksRight = [
-  { name: 'Rates', href: '#contact' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Rates', href: '/#contact' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 export default function Navbar() {
   const [scrollState, setScrollState] = useState('top'); // 'top', 'scrolled', 'solid'
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +57,18 @@ export default function Navbar() {
     }
   };
 
+  const handleLinkClick = (e, href) => {
+    if (href.startsWith('/#') && isHomePage) {
+      e.preventDefault();
+      const id = href.replace('/#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <motion.nav
@@ -64,35 +80,41 @@ export default function Navbar() {
         {/* NAV LEFT */}
         <div className="hidden md:flex items-center gap-[34px]">
           {navLinksLeft.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
+              to={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
               className="font-display font-semibold text-[13px] tracking-[1.8px] uppercase text-brand-white opacity-80 hover:opacity-100 hover:text-brand-accent transition-all"
             >
               {link.name}
-            </a>
+            </Link>
           ))}
         </div>
 
         {/* LOGO */}
-        <a href="#hero" className="absolute left-1/2 -translate-x-1/2 flex items-center no-underline group">
+        <Link 
+          to="/" 
+          onClick={(e) => handleLinkClick(e, '/#hero')} 
+          className="absolute left-1/2 -translate-x-1/2 flex items-center no-underline group"
+        >
           <img 
             src="/logo.png" 
             alt="12 Nationwide Logo" 
             className="h-[50px] md:h-[60px] w-auto transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
           />
-        </a>
+        </Link>
 
         {/* NAV RIGHT */}
         <div className="hidden md:flex items-center gap-[34px]">
           {navLinksRight.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
+              to={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
               className="font-display font-semibold text-[13px] tracking-[1.8px] uppercase text-brand-white opacity-80 hover:opacity-100 hover:text-brand-accent transition-all"
             >
               {link.name}
-            </a>
+            </Link>
           ))}
           <div className="flex items-center gap-[14px]">
             <a href="https://www.facebook.com/profile.php?id=61566018981481" target="_blank" rel="noopener noreferrer">
@@ -105,9 +127,13 @@ export default function Navbar() {
               <svg className="w-[18px] h-[18px] fill-white opacity-70 cursor-pointer hover:opacity-100 hover:fill-brand-cyan transition-all" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
             </a>
           </div>
-          <a href="#contact" className="font-display font-bold text-[13px] tracking-[1.5px] uppercase text-brand-bg bg-brand-accent px-[22px] py-[10px] no-underline shadow-[0_0_16px_rgba(255,215,0,0.35)] hover:bg-[#ffe44d] hover:shadow-[0_0_28px_rgba(255,215,0,0.6)] transition-all">
+          <Link 
+            to="/#contact" 
+            onClick={(e) => handleLinkClick(e, '/#contact')} 
+            className="font-display font-bold text-[13px] tracking-[1.5px] uppercase text-brand-bg bg-brand-accent px-[22px] py-[10px] no-underline shadow-[0_0_16px_rgba(255,215,0,0.35)] hover:bg-[#ffe44d] hover:shadow-[0_0_28px_rgba(255,215,0,0.6)] transition-all"
+          >
             Get a Quote
-          </a>
+          </Link>
         </div>
 
         {/* MOBILE MENU TOGGLE */}
@@ -135,22 +161,22 @@ export default function Navbar() {
             className="fixed inset-0 z-[998] bg-brand-bg pt-[100px] px-6 flex flex-col gap-6"
           >
             {[...navLinksLeft, ...navLinksRight].map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
+                to={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className="font-display font-black text-4xl uppercase text-brand-white hover:text-brand-accent transition-colors"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a 
-              href="#contact" 
-              onClick={() => setIsMenuOpen(false)}
+            <Link 
+              to="/#contact" 
+              onClick={(e) => handleLinkClick(e, '/#contact')}
               className="mt-4 font-display font-bold text-xl tracking-[2px] uppercase text-brand-bg bg-brand-accent py-4 text-center shadow-[0_0_20px_rgba(255,215,0,0.3)]"
             >
               Get a Quote
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

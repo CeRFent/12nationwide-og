@@ -1,4 +1,5 @@
-import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LenisProvider, useLenis } from './hooks/useLenis.jsx';
@@ -9,29 +10,17 @@ import BackToTop from './components/BackToTop';
 import ErrorBoundary from './components/ErrorBoundary';
 import './styles/globals.css';
 
-// Lazy loaded sections
-const Hero = lazy(() => import('./components/Hero'));
-const InfoBar = lazy(() => import('./components/InfoBar'));
-const Services = lazy(() => import('./components/Services'));
-const Difference = lazy(() => import('./components/Difference'));
-const WhyUs = lazy(() => import('./components/WhyUs'));
-const Testimonials = lazy(() => import('./components/Testimonials'));
-const Social = lazy(() => import('./components/Social'));
-const FAQ = lazy(() => import('./components/FAQ'));
-const Contact = lazy(() => import('./components/Contact'));
+// Pages
+import Home from './pages/Home';
+const Guide = lazy(() => import('./pages/Guide'));
 const Footer = lazy(() => import('./components/Footer'));
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SectionLoader = () => (
-  <div className="w-full h-screen bg-brand-bg flex items-center justify-center">
-    <div className="spinner" />
-  </div>
-);
-
 function AppContent({ isLoading }) {
   const lenis = useLenis();
   const prefersReducedMotion = useReducedMotion();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -40,6 +29,13 @@ function AppContent({ isLoading }) {
       gsap.globalTimeline.timeScale(1);
     }
   }, [prefersReducedMotion]);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+  }, [pathname, lenis]);
 
   useEffect(() => {
     if (!lenis || isLoading) return;
@@ -63,16 +59,18 @@ function AppContent({ isLoading }) {
     <main className="relative bg-brand-bg">
       <Navbar />
       <ErrorBoundary>
-        <Suspense fallback={<SectionLoader />}>
-          <Hero isLoading={isLoading} />
-          <InfoBar />
-          <Services />
-          <Difference />
-          <WhyUs />
-          <Testimonials />
-          <Social />
-          <FAQ />
-          <Contact />
+        <Routes>
+          <Route path="/" element={<Home isLoading={isLoading} />} />
+          <Route 
+            path="/guide" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <Guide />
+              </Suspense>
+            } 
+          />
+        </Routes>
+        <Suspense fallback={null}>
           <Footer />
         </Suspense>
       </ErrorBoundary>
