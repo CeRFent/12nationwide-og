@@ -15,8 +15,19 @@ export default function Checkout() {
     return fetch('/api/checkout', {
       method: 'POST',
     })
-      .then((res) => res.json())
-      .then((data) => data.clientSecret);
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then(err => { throw new Error(err.error || 'Failed to initialize checkout'); });
+        }
+        return res.json();
+      })
+      .then((data) => data.clientSecret)
+      .catch(err => {
+        console.error('Checkout Error:', err);
+        // This will be caught by Stripe's EmbeddedCheckout if it's already rendered,
+        // but we should probably handle it here to show a UI error if necessary.
+        throw err;
+      });
   }, []);
 
   const options = { fetchClientSecret };

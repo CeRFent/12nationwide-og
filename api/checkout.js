@@ -1,15 +1,23 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 export default async function handler(req, res) {
+  console.log('Checkout API request received');
+  
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('Missing STRIPE_SECRET_KEY');
+    return res.status(500).json({ error: 'Server configuration error: Missing Secret Key' });
+  }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
   if (req.method === 'POST') {
     try {
+      console.log('Creating checkout session for price:', process.env.VITE_STRIPE_PRICE_ID);
+      
       const session = await stripe.checkout.sessions.create({
         ui_mode: 'embedded',
         line_items: [
           {
-            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
             price: process.env.VITE_STRIPE_PRICE_ID,
             quantity: 1,
           },
@@ -18,9 +26,11 @@ export default async function handler(req, res) {
         return_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       });
 
+      console.log('Session created successfully:', session.id);
       res.status(200).json({ clientSecret: session.client_secret });
     } catch (err) {
-      res.status(err.statusCode || 500).json(err.message);
+      console.error('Stripe Session Error:', err.message);
+      res.status(err.statusCode || 500).json({ error: err.message });
     }
   } else {
     res.setHeader('Allow', 'POST');
