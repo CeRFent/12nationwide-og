@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+
+const MotionLink = motion(Link);
 
 const tickerItems = [
   { icon: '📘', text: 'New Release — Field Guide' },
@@ -108,14 +111,14 @@ export default function Guide() {
             </div>
           </div>
 
-          <motion.a 
+          <MotionLink 
+            to="/checkout" 
             whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(255,215,0,0.5)' }}
             whileTap={{ scale: 0.95 }}
-            href="https://buy.stripe.com/fZu5kDfXzc1eb4683253O00" 
             className="inline-block font-display font-bold text-lg tracking-[2px] uppercase text-brand-bg bg-brand-accent px-12 py-5 no-underline shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all"
           >
             Download Now — $27
-          </motion.a>
+          </MotionLink>
           
           <div className="mt-6 text-[13px] text-white/40 flex items-center gap-2 font-body">
             🔒 Instant PDF · No subscription · Works on any device
@@ -278,14 +281,14 @@ export default function Guide() {
             Instant PDF · Was $49
           </div>
 
-          <motion.a 
+          <MotionLink 
+            to="/checkout" 
             whileHover={{ scale: 1.05, boxShadow: '0 0 60px rgba(255,215,0,0.6)' }}
             whileTap={{ scale: 0.95 }}
-            href="https://buy.stripe.com/fZu5kDfXzc1eb4683253O00" 
             className="inline-block font-display font-bold text-xl tracking-[3px] uppercase text-brand-bg bg-brand-accent px-16 py-6 no-underline shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-all"
           >
             Get Instant Access →
-          </motion.a>
+          </MotionLink>
 
           <div className="mt-12 flex justify-center gap-8 md:gap-16 flex-wrap grayscale opacity-50">
             {['Instant PDF Download', '80-Page Field Guide', 'No Subscription', 'Any Device'].map((badge, i) => (
