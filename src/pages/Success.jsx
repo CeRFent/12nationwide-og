@@ -1,15 +1,69 @@
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
 
 export default function Success() {
   const { width, height } = useWindowSize();
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get('session_id');
+  const [status, setStatus] = useState('loading'); // 'loading' | 'verified' | 'failed'
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    // You could add tracking pixels here (Facebook, Google)
-    console.log('Purchase successful!');
-  }, []);
+    if (!sessionId) {
+      setStatus('failed');
+      return;
+    }
+
+    fetch(`/api/verify-session?session_id=${sessionId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setStatus('verified');
+          setUserEmail(data.email || '');
+          console.log('Purchase verified successfully!');
+        } else {
+          setStatus('failed');
+        }
+      })
+      .catch((err) => {
+        console.error('Verification error:', err);
+        setStatus('failed');
+      });
+  }, [sessionId]);
+
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-brand-bg pt-[120px] pb-24 px-6 flex items-center justify-center relative overflow-hidden">
+        <div className="text-center relative z-10">
+          <div className="w-16 h-16 border-4 border-brand-accent border-t-transparent rounded-full animate-spin mx-auto mb-6" />
+          <h2 className="font-display font-black text-2xl uppercase tracking-widest text-white">Verifying Transaction...</h2>
+          <p className="text-white/40 text-sm mt-2">Please wait while we confirm your payment status.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === 'failed') {
+    return (
+      <div className="min-h-screen bg-brand-bg pt-[120px] pb-24 px-6 flex items-center justify-center relative overflow-hidden">
+        <div className="max-w-[500px] mx-auto text-center relative z-10">
+          <div className="w-20 h-20 bg-red-500/10 border-2 border-red-500 rounded-full flex items-center justify-center mx-auto mb-8">
+            <span className="text-3xl">⚠️</span>
+          </div>
+          <h1 className="font-display font-black text-4xl uppercase mb-4 text-red-500">Access Denied</h1>
+          <p className="text-white/60 mb-8 leading-relaxed">
+            We could not verify a valid purchase session. If you recently bought the ebook, please use the unique link sent to your email, or contact support if the issue persists.
+          </p>
+          <a href="/" className="inline-block font-display font-bold uppercase tracking-widest text-xs text-brand-bg bg-brand-accent px-6 py-4 hover:scale-105 transition-transform">
+            Return to Homepage
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-brand-bg pt-[120px] pb-24 px-6 relative overflow-hidden">
@@ -65,14 +119,14 @@ export default function Success() {
               <motion.a 
                 whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(255,215,0,0.5)' }}
                 whileTap={{ scale: 0.95 }}
-                href="/Driver Income Blueprint Ebook.pptx.pdf" // Update this link with your actual PDF location
+                href={`/api/download?session_id=${sessionId}`}
                 download
                 className="inline-block w-full text-center font-display font-bold text-lg tracking-[2px] uppercase text-brand-bg bg-brand-accent px-8 py-5 no-underline shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all"
               >
                 Download Ebook Now
               </motion.a>
               <p className="mt-4 text-[12px] text-white/30 text-center md:text-left">
-                Check your email for a receipt from Stripe.
+                Check your email {userEmail ? `(${userEmail})` : ''} for a receipt from Stripe.
               </p>
             </div>
           </div>
@@ -96,3 +150,4 @@ export default function Success() {
     </div>
   );
 }
+
