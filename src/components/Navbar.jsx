@@ -5,12 +5,13 @@ import { Link, useLocation } from 'react-router-dom';
 const navLinksLeft = [
   { name: 'About', href: '/#why' },
   { name: 'Services', href: '/#services' },
-  { name: 'Get The Guide', href: '/guide' },
+  { name: 'Academy', href: '/academy' },
+  { name: 'Get the Guide', href: '/guide' },
 ];
 
 const navLinksRight = [
   { name: 'Rates', href: '/#contact' },
-  { name: 'Contact', href: '/#contact' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Navbar() {

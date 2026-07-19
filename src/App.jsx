@@ -12,9 +12,14 @@ import './styles/globals.css';
 
 // Pages
 import Home from './pages/Home';
-const Guide = lazy(() => import('./pages/Guide'));
+const Academy = lazy(() => import('./pages/Guide'));
+const EbookLanding = lazy(() => import('./pages/EbookLanding'));
 const Success = lazy(() => import('./pages/Success'));
 const Checkout = lazy(() => import('./pages/Checkout'));
+const TrackingPage = lazy(() => import('./pages/TrackingPage'));
+const DriverPortal = lazy(() => import('./pages/DriverPortal'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 const Footer = lazy(() => import('./components/Footer'));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -64,10 +69,18 @@ function AppContent({ isLoading }) {
         <Routes>
           <Route path="/" element={<Home isLoading={isLoading} />} />
           <Route 
+            path="/academy" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <Academy />
+              </Suspense>
+            } 
+          />
+          <Route 
             path="/guide" 
             element={
               <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
-                <Guide />
+                <EbookLanding />
               </Suspense>
             } 
           />
@@ -84,6 +97,38 @@ function AppContent({ isLoading }) {
             element={
               <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
                 <Checkout />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/track/:orderId" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <TrackingPage />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/driver" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <DriverPortal />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/admin" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <AdminDashboard />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/contact" 
+            element={
+              <Suspense fallback={<div className="h-screen bg-brand-bg" />}>
+                <ContactPage />
               </Suspense>
             } 
           />
