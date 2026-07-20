@@ -200,20 +200,31 @@ export default function Contact() {
   // Autocomplete Suggestions Fetcher & Event Handlers
   const fetchSuggestions = async (val, setSuggestions) => {
     const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-    if (!token || !val || val.trim().length < 3) {
+    if (!token || !val || val.trim().length < 2) {
       setSuggestions([]);
       return;
     }
 
     try {
-      // Prioritize Florida geocoding bounds to ensure local suggestions rank first
+      // Primary: query Mapbox with US country bounds
       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(val)}.json?access_token=${token}&limit=5&autocomplete=true&country=us&bbox=-87.6,24.3,-79.9,31.0`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
-        if (data.features) {
+        if (data.features && data.features.length > 0) {
           const items = data.features.map(f => f.place_name);
           setSuggestions(items);
+          return;
+        }
+      }
+
+      // Fallback: nationwide US geocoding without bounding box restriction
+      const fallbackUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(val)}.json?access_token=${token}&limit=5&autocomplete=true&country=us`;
+      const fallbackRes = await fetch(fallbackUrl);
+      if (fallbackRes.ok) {
+        const fallbackData = await fallbackRes.json();
+        if (fallbackData.features) {
+          setSuggestions(fallbackData.features.map(f => f.place_name));
         }
       }
     } catch (err) {
@@ -597,12 +608,15 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Pickup Autocomplete */}
-                <div className="space-y-2 relative">
+                <div className="space-y-2 relative z-30">
                   <label className="block font-display font-bold text-[11px] tracking-[1.5px] uppercase text-white/55">Pickup Address *</label>
                   <input 
                     value={pickupAddress} 
                     onChange={handlePickupChange} 
-                    onBlur={() => setTimeout(() => setPickupSuggestions([]), 250)}
+                    onFocus={() => {
+                      if (pickupAddress.trim().length >= 2) fetchSuggestions(pickupAddress, setPickupSuggestions);
+                    }}
+                    onBlur={() => setTimeout(() => setPickupSuggestions([]), 350)}
                     type="text" 
                     required 
                     placeholder="Street, City, State" 
@@ -614,17 +628,24 @@ export default function Contact() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
-                        className="absolute left-0 right-0 z-50 mt-1 bg-brand-card border border-white/12 rounded-lg shadow-2xl overflow-hidden divide-y divide-white/5 max-h-[180px] overflow-y-auto"
+                        className="absolute left-0 right-0 z-[999] mt-1 bg-[#2E3440] border border-white/20 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden divide-y divide-white/10 max-h-[220px] overflow-y-auto"
                       >
                         {pickupSuggestions.map((item, idx) => (
                           <li 
                             key={idx} 
+                            onMouseDown={(e) => e.preventDefault()}
+                            onTouchStart={(e) => {
+                              e.preventDefault();
+                              setPickupAddress(item);
+                              setPickupSuggestions([]);
+                              calculateDistance(item, dropoffAddress);
+                            }}
                             onClick={() => {
                               setPickupAddress(item);
                               setPickupSuggestions([]);
                               calculateDistance(item, dropoffAddress);
                             }}
-                            className="p-[10px_14px] text-xs text-white/80 hover:bg-brand-accent hover:text-brand-bg font-medium cursor-pointer transition-colors text-left"
+                            className="p-[12px_16px] text-xs text-white hover:bg-brand-accent hover:text-brand-bg active:bg-brand-accent active:text-brand-bg font-medium cursor-pointer transition-colors text-left"
                           >
                             {item}
                           </li>
@@ -635,12 +656,15 @@ export default function Contact() {
                 </div>
 
                 {/* Drop-off Autocomplete */}
-                <div className="space-y-2 relative">
+                <div className="space-y-2 relative z-20">
                   <label className="block font-display font-bold text-[11px] tracking-[1.5px] uppercase text-white/55">Drop-off Address *</label>
                   <input 
                     value={dropoffAddress} 
                     onChange={handleDropoffChange} 
-                    onBlur={() => setTimeout(() => setDropoffSuggestions([]), 250)}
+                    onFocus={() => {
+                      if (dropoffAddress.trim().length >= 2) fetchSuggestions(dropoffAddress, setDropoffSuggestions);
+                    }}
+                    onBlur={() => setTimeout(() => setDropoffSuggestions([]), 350)}
                     type="text" 
                     required 
                     placeholder="Street, City, State" 
@@ -652,17 +676,24 @@ export default function Contact() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
-                        className="absolute left-0 right-0 z-50 mt-1 bg-brand-card border border-white/12 rounded-lg shadow-2xl overflow-hidden divide-y divide-white/5 max-h-[180px] overflow-y-auto"
+                        className="absolute left-0 right-0 z-[999] mt-1 bg-[#2E3440] border border-white/20 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden divide-y divide-white/10 max-h-[220px] overflow-y-auto"
                       >
                         {dropoffSuggestions.map((item, idx) => (
                           <li 
                             key={idx} 
+                            onMouseDown={(e) => e.preventDefault()}
+                            onTouchStart={(e) => {
+                              e.preventDefault();
+                              setDropoffAddress(item);
+                              setDropoffSuggestions([]);
+                              calculateDistance(pickupAddress, item);
+                            }}
                             onClick={() => {
                               setDropoffAddress(item);
                               setDropoffSuggestions([]);
                               calculateDistance(pickupAddress, item);
                             }}
-                            className="p-[10px_14px] text-xs text-white/80 hover:bg-brand-accent hover:text-brand-bg font-medium cursor-pointer transition-colors text-left"
+                            className="p-[12px_16px] text-xs text-white hover:bg-brand-accent hover:text-brand-bg active:bg-brand-accent active:text-brand-bg font-medium cursor-pointer transition-colors text-left"
                           >
                             {item}
                           </li>
