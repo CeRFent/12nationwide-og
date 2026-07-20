@@ -27,8 +27,8 @@ gsap.registerPlugin(ScrollTrigger);
 function AppContent({ isLoading }) {
   const lenis = useLenis();
   const prefersReducedMotion = useReducedMotion();
-  const { pathname } = useLocation();
-
+  const location = useLocation();
+  const { pathname, hash } = location;
   useEffect(() => {
     if (prefersReducedMotion) {
       gsap.globalTimeline.timeScale(100);
@@ -37,12 +37,26 @@ function AppContent({ isLoading }) {
     }
   }, [prefersReducedMotion]);
 
-  // Scroll to top on route change
+  // Scroll to top or target hash section on route change
   useEffect(() => {
-    if (lenis) {
+    if (!lenis) return;
+
+    if (hash) {
+      const id = hash.replace('#', '');
+      lenis.scrollTo(0, { immediate: true });
+
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+        const element = document.getElementById(id) || document.getElementById('contact');
+        if (element) {
+          lenis.scrollTo(element, { offset: -70, duration: 1.2 });
+        }
+      }, 250);
+      return () => clearTimeout(timer);
+    } else {
       lenis.scrollTo(0, { immediate: true });
     }
-  }, [pathname, lenis]);
+  }, [pathname, hash, lenis]);
 
   useEffect(() => {
     if (!lenis || isLoading) return;

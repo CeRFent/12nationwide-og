@@ -1,6 +1,19 @@
 import { motion } from 'framer-motion';
+import { useLenis } from '../hooks/useLenis.jsx';
 
 export default function Hero({ isLoading }) {
+  const lenis = useLenis();
+
+  const handleQuoteClick = (e) => {
+    e.preventDefault();
+    const element = document.getElementById('contact');
+    if (element && lenis) {
+      lenis.scrollTo(element, { offset: -70, duration: 1.2 });
+    } else {
+      window.location.hash = '#contact';
+    }
+  };
+
   return (
     <section id="hero" className="relative h-screen min-h-[640px] flex items-center justify-center text-center overflow-hidden bg-brand-bg">
       {/* BACKGROUND VIDEO */}
@@ -48,7 +61,8 @@ export default function Hero({ isLoading }) {
           whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(255,215,0,0.7)' }}
           whileTap={{ scale: 0.95 }}
           href="#contact" 
-          className="inline-block font-display font-bold text-sm tracking-[2px] uppercase text-brand-bg bg-brand-accent px-[46px] py-[17px] no-underline shadow-[0_0_22px_rgba(255,215,0,0.45)] transition-colors"
+          onClick={handleQuoteClick}
+          className="inline-block font-display font-bold text-sm tracking-[2px] uppercase text-brand-bg bg-brand-accent px-[46px] py-[17px] no-underline shadow-[0_0_22px_rgba(255,215,0,0.45)] transition-colors cursor-pointer"
         >
           Get a Free Quote
         </motion.a>

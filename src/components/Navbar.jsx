@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import { useLenis } from '../hooks/useLenis.jsx';
 
 const navLinksLeft = [
   { name: 'About', href: '/#why' },
@@ -15,6 +16,7 @@ const navLinksRight = [
 ];
 
 export default function Navbar() {
+  const lenis = useLenis();
   const [scrollState, setScrollState] = useState('top'); // 'top', 'scrolled', 'solid'
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -63,7 +65,9 @@ export default function Navbar() {
       e.preventDefault();
       const id = href.replace('/#', '');
       const element = document.getElementById(id);
-      if (element) {
+      if (element && lenis) {
+        lenis.scrollTo(element, { offset: -70, duration: 1.2 });
+      } else if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }

@@ -76,22 +76,7 @@ export default function Contact() {
     };
 
     const formatAddress = (addr) => {
-      const cleaned = cleanAddress(addr);
-      const lowercase = cleaned.toLowerCase();
-      if (
-        !lowercase.includes('orlando') && 
-        !lowercase.includes('fl') && 
-        !lowercase.includes('florida') &&
-        !lowercase.includes('winter park') &&
-        !lowercase.includes('kissimmee') &&
-        !lowercase.includes('sanford') &&
-        !lowercase.includes('oviedo') &&
-        !lowercase.includes('apopka') &&
-        !lowercase.includes('altamonte')
-      ) {
-        return `${cleaned}, Orlando, FL`;
-      }
-      return cleaned;
+      return cleanAddress(addr);
     };
 
     // 1. Mapbox Geocoding & Routing Flow (Fully Reliable client-side)
@@ -470,7 +455,7 @@ export default function Contact() {
         </div>
 
         {/* Calculator Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.3fr] gap-12 lg:gap-20 items-start">
+        <div id="quote" className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.3fr] gap-12 lg:gap-20 items-start">
           
           {/* LEFT COLUMN: LIVE ESTIMATOR CARD */}
           <div className="lg:sticky lg:top-24 order-2 lg:order-1">
@@ -633,13 +618,7 @@ export default function Contact() {
                         {pickupSuggestions.map((item, idx) => (
                           <li 
                             key={idx} 
-                            onMouseDown={(e) => e.preventDefault()}
-                            onTouchStart={(e) => {
-                              e.preventDefault();
-                              setPickupAddress(item);
-                              setPickupSuggestions([]);
-                              calculateDistance(item, dropoffAddress);
-                            }}
+                            onPointerDown={(e) => e.preventDefault()}
                             onClick={() => {
                               setPickupAddress(item);
                               setPickupSuggestions([]);
@@ -681,13 +660,7 @@ export default function Contact() {
                         {dropoffSuggestions.map((item, idx) => (
                           <li 
                             key={idx} 
-                            onMouseDown={(e) => e.preventDefault()}
-                            onTouchStart={(e) => {
-                              e.preventDefault();
-                              setDropoffAddress(item);
-                              setDropoffSuggestions([]);
-                              calculateDistance(pickupAddress, item);
-                            }}
+                            onPointerDown={(e) => e.preventDefault()}
                             onClick={() => {
                               setDropoffAddress(item);
                               setDropoffSuggestions([]);

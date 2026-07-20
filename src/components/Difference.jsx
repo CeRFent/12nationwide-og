@@ -1,6 +1,19 @@
 import { motion } from 'framer-motion';
+import { useLenis } from '../hooks/useLenis.jsx';
 
 export default function Difference() {
+  const lenis = useLenis();
+
+  const handleQuoteClick = (e) => {
+    e.preventDefault();
+    const element = document.getElementById('contact');
+    if (element && lenis) {
+      lenis.scrollTo(element, { offset: -70, duration: 1.2 });
+    } else {
+      window.location.hash = '#contact';
+    }
+  };
+
   return (
     <section id="difference" className="bg-linear-to-br from-[#12141a] to-brand-card px-6 md:px-[60px] py-[100px] border-y border-brand-card-border grid grid-cols-1 lg:grid-cols-2 gap-[80px] items-center">
       {/* VIDEO WRAP */}
@@ -19,7 +32,8 @@ export default function Difference() {
           poster="/promo-poster.png"
           onCanPlay={(e) => e.target.play()}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-        >          <source src="/promo-video.mp4" type="video/mp4" />
+        >
+          <source src="/promo-video.mp4" type="video/mp4" />
         </video>
         {/* Overlay if video is missing or loading */}
         <div className="absolute inset-0 bg-linear-to-br from-brand-bg/40 to-brand-card/40 pointer-events-none" />
@@ -40,7 +54,8 @@ export default function Difference() {
           whileHover={{ scale: 1.05, boxShadow: '0 0 32px rgba(255,215,0,0.55)' }}
           whileTap={{ scale: 0.95 }}
           href="#contact" 
-          className="inline-block font-display font-bold text-[13px] tracking-[2px] uppercase bg-brand-accent text-brand-bg px-[34px] py-4 no-underline shadow-[0_0_18px_rgba(255,215,0,0.3)] transition-all"
+          onClick={handleQuoteClick}
+          className="inline-block font-display font-bold text-[13px] tracking-[2px] uppercase bg-brand-accent text-brand-bg px-[34px] py-4 no-underline shadow-[0_0_18px_rgba(255,215,0,0.3)] transition-all cursor-pointer"
         >
           Get Your Free Quote
         </motion.a>
