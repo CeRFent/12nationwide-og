@@ -19,7 +19,7 @@ const freeResources = [
       'Build a growth fund',
       'Create a profitable business system'
     ],
-    downloadUrl: '/downloads/Business%20Money%20Flow%20Blueprint.pdf',
+    downloadUrl: '/downloads/Business_Money_Flow_Blueprint%20.pdf',
     btnText: 'Start Here (Free)'
   }
 ];

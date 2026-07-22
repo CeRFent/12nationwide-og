@@ -1,9 +1,11 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DEFAULT_MAPBOX_TOKEN = typeof window !== 'undefined' ? atob('cGsuZXlKMWFXUWlPaUpqYjNWeWFXVnlibUYwYVc5dUlpd2lhU0k2SW1OcmNtTXpNek0yZUhVd01HUnBTVzVsZG1wdmJEVjRkM2QzSW4wLmttdEttZzdrWDRVVnN0RVFMNERUNHc=') : '';
 
 export default function Contact() {
+  const isSelectingSuggestionRef = useRef(false);
+
   // Customer Info State
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -132,14 +134,20 @@ export default function Contact() {
   // Autocomplete Suggestions Fetcher & Event Handlers
   const fetchSuggestions = async (val, setSuggestions) => {
     const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || DEFAULT_MAPBOX_TOKEN;
-    if (!token || !val || val.trim().length < 2) {
+    if (!token || !val) {
+      setSuggestions([]);
+      return;
+    }
+
+    const cleanVal = val.replace(/\u00A0/g, ' ').trim();
+    if (cleanVal.length < 2) {
       setSuggestions([]);
       return;
     }
 
     try {
-      // Primary: query Mapbox with US country bounds
-      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(val)}.json?access_token=${token}&limit=5&autocomplete=true&country=us&bbox=-87.6,24.3,-79.9,31.0`;
+      // Query Mapbox nationwide US geocoding
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(cleanVal)}.json?access_token=${token}&limit=5&autocomplete=true&country=us`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -149,18 +157,10 @@ export default function Contact() {
           return;
         }
       }
-
-      // Fallback: nationwide US geocoding without bounding box restriction
-      const fallbackUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(val)}.json?access_token=${token}&limit=5&autocomplete=true&country=us`;
-      const fallbackRes = await fetch(fallbackUrl);
-      if (fallbackRes.ok) {
-        const fallbackData = await fallbackRes.json();
-        if (fallbackData.features) {
-          setSuggestions(fallbackData.features.map(f => f.place_name));
-        }
-      }
+      setSuggestions([]);
     } catch (err) {
       console.warn('Mapbox suggestions error:', err);
+      setSuggestions([]);
     }
   };
 
@@ -540,7 +540,7 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Pickup Autocomplete */}
-                <div className="space-y-2 relative z-30">
+                <div className="space-y-2 relative z-[50]">
                   <label className="block font-display font-bold text-[11px] tracking-[1.5px] uppercase text-white/55">Pickup Address *</label>
                   <input 
                     value={pickupAddress} 
@@ -548,11 +548,18 @@ export default function Contact() {
                     onFocus={() => {
                       if (pickupAddress.trim().length >= 2) fetchSuggestions(pickupAddress, setPickupSuggestions);
                     }}
-                    onBlur={() => setTimeout(() => setPickupSuggestions([]), 350)}
+                    onBlur={() => {
+                      setTimeout(() => {
+                        if (!isSelectingSuggestionRef.current) {
+                          setPickupSuggestions([]);
+                        }
+                        isSelectingSuggestionRef.current = false;
+                      }, 400);
+                    }}
                     type="text" 
                     required 
                     placeholder="Street, City, State" 
-                    className="w-full bg-brand-bg/70 border border-white/12 p-[14px_16px] font-body text-[14px] text-brand-white outline-none rounded-[6px] focus:border-brand-accent focus:shadow-[0_0_12px_rgba(255,215,0,0.15)] transition-all" 
+                    className="w-full bg-brand-bg/70 border border-white/12 p-[14px_16px] font-body text-[16px] md:text-[14px] text-brand-white outline-none rounded-[6px] focus:border-brand-accent focus:shadow-[0_0_12px_rgba(255,215,0,0.15)] transition-all" 
                   />
                   <AnimatePresence>
                     {pickupSuggestions.length > 0 && (
@@ -560,15 +567,22 @@ export default function Contact() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
-                        className="absolute left-0 right-0 z-[999] mt-1 bg-[#2E3440] border border-white/20 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden divide-y divide-white/10 max-h-[220px] overflow-y-auto"
+                        className="absolute left-0 right-0 z-[9999] mt-1 bg-[#2E3440] border border-white/20 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden divide-y divide-white/10 max-h-[220px] overflow-y-auto"
                       >
                         {pickupSuggestions.map((item, idx) => (
                           <li 
                             key={idx} 
-                            onPointerDown={(e) => e.preventDefault()}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              isSelectingSuggestionRef.current = true;
+                            }}
+                            onTouchStart={() => {
+                              isSelectingSuggestionRef.current = true;
+                            }}
                             onClick={() => {
                               setPickupAddress(item);
                               setPickupSuggestions([]);
+                              isSelectingSuggestionRef.current = false;
                               calculateDistance(item, dropoffAddress);
                             }}
                             className="p-[12px_16px] text-xs text-white hover:bg-brand-accent hover:text-brand-bg active:bg-brand-accent active:text-brand-bg font-medium cursor-pointer transition-colors text-left"
@@ -582,7 +596,7 @@ export default function Contact() {
                 </div>
 
                 {/* Drop-off Autocomplete */}
-                <div className="space-y-2 relative z-20">
+                <div className="space-y-2 relative z-[40]">
                   <label className="block font-display font-bold text-[11px] tracking-[1.5px] uppercase text-white/55">Drop-off Address *</label>
                   <input 
                     value={dropoffAddress} 
@@ -590,11 +604,18 @@ export default function Contact() {
                     onFocus={() => {
                       if (dropoffAddress.trim().length >= 2) fetchSuggestions(dropoffAddress, setDropoffSuggestions);
                     }}
-                    onBlur={() => setTimeout(() => setDropoffSuggestions([]), 350)}
+                    onBlur={() => {
+                      setTimeout(() => {
+                        if (!isSelectingSuggestionRef.current) {
+                          setDropoffSuggestions([]);
+                        }
+                        isSelectingSuggestionRef.current = false;
+                      }, 400);
+                    }}
                     type="text" 
                     required 
                     placeholder="Street, City, State" 
-                    className="w-full bg-brand-bg/70 border border-white/12 p-[14px_16px] font-body text-[14px] text-brand-white outline-none rounded-[6px] focus:border-brand-accent focus:shadow-[0_0_12px_rgba(255,215,0,0.15)] transition-all" 
+                    className="w-full bg-brand-bg/70 border border-white/12 p-[14px_16px] font-body text-[16px] md:text-[14px] text-brand-white outline-none rounded-[6px] focus:border-brand-accent focus:shadow-[0_0_12px_rgba(255,215,0,0.15)] transition-all" 
                   />
                   <AnimatePresence>
                     {dropoffSuggestions.length > 0 && (
@@ -602,15 +623,22 @@ export default function Contact() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
-                        className="absolute left-0 right-0 z-[999] mt-1 bg-[#2E3440] border border-white/20 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden divide-y divide-white/10 max-h-[220px] overflow-y-auto"
+                        className="absolute left-0 right-0 z-[9999] mt-1 bg-[#2E3440] border border-white/20 rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden divide-y divide-white/10 max-h-[220px] overflow-y-auto"
                       >
                         {dropoffSuggestions.map((item, idx) => (
                           <li 
                             key={idx} 
-                            onPointerDown={(e) => e.preventDefault()}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              isSelectingSuggestionRef.current = true;
+                            }}
+                            onTouchStart={() => {
+                              isSelectingSuggestionRef.current = true;
+                            }}
                             onClick={() => {
                               setDropoffAddress(item);
                               setDropoffSuggestions([]);
+                              isSelectingSuggestionRef.current = false;
                               calculateDistance(pickupAddress, item);
                             }}
                             className="p-[12px_16px] text-xs text-white hover:bg-brand-accent hover:text-brand-bg active:bg-brand-accent active:text-brand-bg font-medium cursor-pointer transition-colors text-left"
