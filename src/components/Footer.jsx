@@ -26,7 +26,8 @@ export default function Footer() {
               { name: 'Rates', href: '/#contact' },
               { name: 'Academy', href: '/academy' },
               { name: 'Get the Guide', href: '/guide' },
-              { name: 'Contact', href: '/contact' }
+              { name: 'Contact', href: '/contact' },
+              { name: 'Staff Portal', href: '/admin' }
             ].map((item) => (
               <a key={item.name} href={item.href} className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item.name}</a>
             ))}

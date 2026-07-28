@@ -1,7 +1,4 @@
-import Stripe from 'stripe'; // If you want payment integration, otherwise keep it clean
-
-// Optional: Install the twilio SDK if using Option B (npm i twilio)
-// import twilio from 'twilio';
+import twilio from 'twilio';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -9,76 +6,144 @@ export default async function handler(req, res) {
   }
 
   const {
+    quoteNumber,
     name,
     email,
     phone,
     pickupAddress,
     dropoffAddress,
     deliveryDistanceMiles,
-    weightCategory,
+    service,
+    vehicle,
+    deliveryTeam,
     estimatedQuote,
     laborSummary,
-    wgSummary
-  } = req.body;
+    items,
+    photoUrls
+  } = req.body || {};
 
   // Validate required inputs
   if (!name || !phone || !pickupAddress || !dropoffAddress) {
     return res.status(400).json({ error: 'Missing required shipment details' });
   }
 
-  // Format the message template
+  const quoteId = quoteNumber || `12N-${Date.now().toString().slice(-6)}`;
+
+  // Format rich message for Telegram / WhatsApp
   const textMessage = `
-🚛 *NEW AUTOMATED LOAD REQUEST*
+🚛 *NEW 12 NATIONWIDE LOAD REQUEST*
+🆔 *Quote #:* ${quoteId}
+
 👤 *Customer:* ${name}
 📞 *Phone:* ${phone}
-✉️ *Email:* ${email}
+✉️ *Email:* ${email || 'N/A'}
 
 📍 *Pickup:* ${pickupAddress}
 🏁 *Drop-off:* ${dropoffAddress}
 
-📏 *Distance:* ${deliveryDistanceMiles}
-📦 *Weight Category:* ${weightCategory}
-🛠️ *Options:* ${laborSummary || 'None'}
-👑 *White-Glove:* ${wgSummary || 'None'}
+📦 *Service:* ${service || 'Delivery'}
+🚚 *Vehicle:* ${vehicle || 'Standard'}
+👥 *Team:* ${deliveryTeam || laborSummary || 'Driver Only'}
+📏 *Distance:* ${deliveryDistanceMiles || 'N/A'}
 
-💰 *ESTIMATED QUOTE:* ${estimatedQuote}
+💰 *ESTIMATED QUOTE:* ${estimatedQuote || 'Pending'}
   `.trim();
 
-  console.log("Forming WhatsApp API payload:\n", textMessage);
+  console.log("==========================================");
+  console.log("Forming Load Alert Notification:\n", textMessage);
+  console.log("==========================================");
 
-  // =========================================================================
-  // OPTION B: TWILIO AUTOMATION (True Push Notification Bot)
-  // To activate this, uncomment the blocks below, install twilio ("npm i twilio"),
-  // and set your TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_WHATSAPP_TO in .env
-  // =========================================================================
-  /*
+  // 1. TELEGRAM BOT NOTIFICATION DISPATCH (Free Rich Push to iPhone)
+  const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
+  const telegramChatId = process.env.TELEGRAM_CHAT_ID;
+  let telegramStatus = 'Skipped (No Telegram Token in .env)';
+
+  if (telegramToken && telegramChatId) {
+    try {
+      const adminAppUrl = process.env.VITE_APP_URL ? `${process.env.VITE_APP_URL}/admin` : 'https://12nationwide.it.com/admin';
+
+      // Send Telegram Text Message with Inline Button
+      const tgRes = await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: telegramChatId,
+          text: textMessage,
+          parse_mode: 'Markdown',
+          reply_markup: {
+            inline_keyboard: [
+              [
+                { text: '📱 Open Admin App', url: adminAppUrl }
+              ]
+            ]
+          }
+        })
+      });
+
+      const tgData = await tgRes.json();
+      if (tgData.ok) {
+        console.log('✅ Telegram Notification sent to iPhone successfully!');
+        telegramStatus = 'Sent';
+      } else {
+        console.error('❌ Telegram Bot API Error:', tgData.description);
+        telegramStatus = `Error: ${tgData.description}`;
+      }
+
+      // If customer attached photos, send photos directly into Telegram Chat!
+      if (Array.isArray(photoUrls) && photoUrls.length > 0) {
+        for (const pUrl of photoUrls) {
+          if (pUrl && pUrl.startsWith('http')) {
+            await fetch(`https://api.telegram.org/bot${telegramToken}/sendPhoto`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                chat_id: telegramChatId,
+                photo: pUrl,
+                caption: `📷 Photo for Quote #${quoteId}`
+              })
+            });
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Failed to dispatch Telegram message:', err);
+      telegramStatus = `Failed: ${err.message}`;
+    }
+  } else {
+    console.log("ℹ️ Telegram Bot environment variables not set in .env (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID).");
+  }
+
+  // 2. TWILIO WHATSAPP BACKUP (If credentials present)
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const twilioSandboxNumber = 'whatsapp:+14155238886'; // Default Twilio Sandbox sender
-  const operatorWhatsAppNumber = process.env.TWILIO_WHATSAPP_TO; // e.g. 'whatsapp:+13862155963'
+  const operatorWhatsAppNumber = process.env.TWILIO_WHATSAPP_TO;
+  let twilioStatus = 'Skipped';
 
   if (accountSid && authToken && operatorWhatsAppNumber) {
     try {
-      const client = require('twilio')(accountSid, authToken);
+      const client = twilio(accountSid, authToken);
+      const formattedTo = operatorWhatsAppNumber.startsWith('whatsapp:')
+        ? operatorWhatsAppNumber
+        : `whatsapp:${operatorWhatsAppNumber}`;
+
       const twilioRes = await client.messages.create({
-        from: twilioSandboxNumber,
-        to: operatorWhatsAppNumber,
+        from: process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886',
+        to: formattedTo,
         body: textMessage
       });
-      console.log('WhatsApp Bot Message Sent via Twilio:', twilioRes.sid);
+      console.log('✅ WhatsApp Message Sent via Twilio SID:', twilioRes.sid);
+      twilioStatus = 'Sent';
     } catch (error) {
-      console.error('Twilio WhatsApp error:', error.message);
-      // Fallback: we won't crash the frontend request, but log the error
+      console.error('❌ Twilio WhatsApp error:', error.message);
+      twilioStatus = `Failed: ${error.message}`;
     }
-  } else {
-    console.log("Twilio environment variables not set. Skipping push notification bot.");
   }
-  */
 
-  // For now, we return success and let the client-side window.open(https://wa.me/...) handle the instant redirection.
   return res.status(200).json({
     success: true,
-    message: 'Load request logged. WhatsApp webhook is ready for automation.',
-    smsPreview: textMessage
+    message: 'Load request processed.',
+    telegramStatus,
+    twilioStatus,
+    textMessage
   });
 }
