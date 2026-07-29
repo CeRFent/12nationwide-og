@@ -19,6 +19,7 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedQuote, setSelectedQuote] = useState(null);
+  const [activePhotoModal, setActivePhotoModal] = useState(null);
 
   // Pricing Rules State
   const [pricingForm, setPricingForm] = useState(DEFAULT_PRICING_CONFIG);
@@ -495,7 +496,16 @@ export default function AdminDashboard() {
                           <span className="text-white/40 text-[10px] block font-mono">{item.weight} lbs per item {item.over300lbs && '• Heavy (>300lbs)'}</span>
                         </div>
                         {item.photo && (
-                          <img src={item.photo} alt="Item Attachment" className="w-10 h-10 object-cover rounded border border-white/20" />
+                          <div className="relative group cursor-pointer" onClick={() => setActivePhotoModal(item.photo)}>
+                            <img
+                              src={item.photo}
+                              alt="Item Attachment"
+                              className="w-12 h-12 object-cover rounded-lg border border-brand-accent/40 group-hover:scale-105 transition-transform"
+                            />
+                            <div className="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                              <span className="text-[10px] text-white font-bold">🔍 View</span>
+                            </div>
+                          </div>
                         )}
                       </div>
                     ))}
@@ -533,6 +543,44 @@ export default function AdminDashboard() {
                   >
                     Close Window
                   </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+
+          {/* LIGHTBOX PHOTO PREVIEW MODAL */}
+          {activePhotoModal && (
+            <div
+              className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 z-[100]"
+              onClick={() => setActivePhotoModal(null)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="relative max-w-4xl max-h-[90vh] bg-brand-card border border-brand-accent/50 p-2 rounded-2xl overflow-hidden shadow-2xl flex flex-col items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setActivePhotoModal(null)}
+                  className="absolute top-4 right-4 bg-black/60 text-white hover:text-brand-accent w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold border border-white/20 z-10"
+                >
+                  ×
+                </button>
+                <img
+                  src={activePhotoModal}
+                  alt="Item High-Res Attachment"
+                  className="max-w-full max-h-[80vh] object-contain rounded-xl"
+                />
+                <div className="w-full p-3 flex justify-between items-center text-xs font-mono bg-white/5 border-t border-white/10 mt-2">
+                  <span className="text-white/60">High-Resolution Item Attachment</span>
+                  <a
+                    href={activePhotoModal}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-brand-accent text-brand-bg font-display font-bold px-4 py-1.5 rounded uppercase hover:brightness-110"
+                  >
+                    ↗️ Open Full Image
+                  </a>
                 </div>
               </motion.div>
             </div>

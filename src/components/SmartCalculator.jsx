@@ -31,6 +31,15 @@ export default function SmartCalculator() {
     setPricingConfig(getPricingConfig());
   }, []);
 
+  // Auto-scroll to top of calculator on step change for smooth mobile UX
+  useEffect(() => {
+    const el = document.getElementById('smart-calculator');
+    if (el) {
+      const topOffset = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, topOffset), behavior: 'smooth' });
+    }
+  }, [activeStep]);
+
   // Step 1: Service
   const [service, setService] = useState('Furniture Delivery');
 

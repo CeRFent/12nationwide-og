@@ -8,31 +8,31 @@ export const LenisProvider = ({ children, options = {} }) => {
 
   useEffect(() => {
     const instance = new Lenis({
-      ...options,
-      duration: 1.2,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
+      touchMultiplier: 1.5,
+      ...options,
     });
 
-    const raf = (time) => {
+    let reqId;
+    function update(time) {
       instance.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
+      reqId = requestAnimationFrame(update);
+    }
+    reqId = requestAnimationFrame(update);
 
     setLenis(instance);
 
     return () => {
+      cancelAnimationFrame(reqId);
       instance.destroy();
       setLenis(null);
     };
-  }, [options]);
+  }, []);
 
   return (
     <LenisContext.Provider value={lenis}>
@@ -42,6 +42,5 @@ export const LenisProvider = ({ children, options = {} }) => {
 };
 
 export const useLenis = () => {
-  const context = useContext(LenisContext);
-  return context;
+  return useContext(LenisContext);
 };

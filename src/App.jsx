@@ -61,17 +61,11 @@ function AppContent({ isLoading }) {
   useEffect(() => {
     if (!lenis || isLoading) return;
 
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const tickerUpdate = (time) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(tickerUpdate);
-    gsap.ticker.lagSmoothing(0);
+    const unbind = lenis.on('scroll', ScrollTrigger.update);
+    ScrollTrigger.refresh();
 
     return () => {
-      gsap.ticker.remove(tickerUpdate);
+      if (typeof unbind === 'function') unbind();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [lenis, isLoading]);

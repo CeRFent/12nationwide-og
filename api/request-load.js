@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
   const quoteId = quoteNumber || `12N-${Date.now().toString().slice(-6)}`;
 
-  // Format rich message for Telegram / WhatsApp
+  // Format rich message for Telegram & WhatsApp
   const textMessage = `
 🚛 *NEW 12 NATIONWIDE LOAD REQUEST*
 🆔 *Quote #:* ${quoteId}
@@ -89,19 +89,41 @@ export default async function handler(req, res) {
         telegramStatus = `Error: ${tgData.description}`;
       }
 
-      // If customer attached photos, send photos directly into Telegram Chat!
+      // Send Customer Uploaded Item Photos to Telegram Chat (Supports HTTP URLs & base64 Data URLs)
       if (Array.isArray(photoUrls) && photoUrls.length > 0) {
-        for (const pUrl of photoUrls) {
-          if (pUrl && pUrl.startsWith('http')) {
+        for (let i = 0; i < photoUrls.length; i++) {
+          const pUrl = photoUrls[i];
+          if (!pUrl) continue;
+
+          if (pUrl.startsWith('http://') || pUrl.startsWith('https://')) {
+            // Direct Public URL Send
             await fetch(`https://api.telegram.org/bot${telegramToken}/sendPhoto`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 chat_id: telegramChatId,
                 photo: pUrl,
-                caption: `📷 Photo for Quote #${quoteId}`
+                caption: `📷 Photo #${i + 1} for Quote #${quoteId}`
               })
             });
+          } else if (pUrl.startsWith('data:image')) {
+            // Base64 Data URL multipart upload to Telegram
+            try {
+              const base64Data = pUrl.split(',')[1];
+              const buffer = Buffer.from(base64Data, 'base64');
+              const formData = new FormData();
+              formData.append('chat_id', telegramChatId);
+              formData.append('caption', `📷 Photo #${i + 1} for Quote #${quoteId}`);
+              formData.append('photo', new Blob([buffer], { type: 'image/jpeg' }), `item_photo_${i + 1}.jpg`);
+
+              await fetch(`https://api.telegram.org/bot${telegramToken}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+              });
+              console.log(`✅ Base64 photo #${i + 1} dispatched to Telegram!`);
+            } catch (pErr) {
+              console.error('Failed to parse base64 photo for Telegram:', pErr);
+            }
           }
         }
       }
@@ -110,7 +132,7 @@ export default async function handler(req, res) {
       telegramStatus = `Failed: ${err.message}`;
     }
   } else {
-    console.log("ℹ️ Telegram Bot environment variables not set in .env (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID).");
+    console.log("ℹ️ Telegram Bot environment variables not set in .env.");
   }
 
   // 2. TWILIO WHATSAPP BACKUP (If credentials present)
