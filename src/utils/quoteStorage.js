@@ -7,116 +7,30 @@ const ADMIN_PIN_KEY = '12NW_ADMIN_PIN';
 
 const DEFAULT_ADMIN_PIN = '212789';
 
-// Initial Mock/Sample Quotes for Admin Dashboard demonstration
-const SAMPLE_QUOTES = [
-  {
-    quoteNumber: '12N-20260728-9041',
-    timestamp: new Date(Date.now() - 3600000 * 5).toISOString(),
-    customer: {
-      name: 'Marcus Vance',
-      phone: '(407) 555-0192',
-      email: 'm.vance@example.com',
-      preferredDate: '2026-07-30',
-      preferredTime: 'Morning (8am - 12pm)',
-      instructions: 'Gate code #4921. Call on arrival.'
-    },
-    pickup: {
-      address: '1400 Orange Ave',
-      city: 'Orlando',
-      zip: '32801',
-      locationType: 'Apartment',
-      floor: 3,
-      elevator: true,
-      gateCode: '4921'
-    },
-    delivery: {
-      address: '450 S Kirkman Rd',
-      city: 'Orlando',
-      zip: '32811',
-      locationType: 'House',
-      floor: 1,
-      elevator: false
-    },
-    service: 'Furniture Delivery',
-    vehicle: 'Sprinter Van',
-    deliveryTeam: 'Driver + One Helper',
-    items: [
-      { type: '3-Seater Leather Sofa', quantity: 1, weight: 210, requiresTwoPeople: true, over300lbs: false }
-    ],
-    pricingBreakdown: {
-      estimatedDistanceMiles: 8.4,
-      estimatedDriveTimeMins: 22,
-      basePrice: 89,
-      mileageCharge: 0,
-      vehicleCharge: 45,
-      laborCharges: 65,
-      surcharges: 0,
-      estimatedTotal: 199.00
-    },
-    status: 'New'
-  },
-  {
-    quoteNumber: '12N-20260727-8103',
-    timestamp: new Date(Date.now() - 3600000 * 28).toISOString(),
-    customer: {
-      name: 'Sarah Jenkins',
-      phone: '(321) 555-0842',
-      email: 'sjenkins@corporate.com',
-      preferredDate: '2026-08-01',
-      preferredTime: 'Afternoon (12pm - 4pm)',
-      instructions: 'Loading dock in the rear.'
-    },
-    pickup: {
-      address: '7000 Universal Blvd',
-      city: 'Orlando',
-      zip: '32819',
-      locationType: 'Warehouse',
-      floor: 1,
-      elevator: false
-    },
-    delivery: {
-      address: '1200 International Dr',
-      city: 'Orlando',
-      zip: '32819',
-      locationType: 'Business',
-      floor: 2,
-      elevator: true
-    },
-    service: 'Commercial Delivery',
-    vehicle: '26-Foot Box Truck',
-    deliveryTeam: 'Driver + One Helper',
-    items: [
-      { type: 'Palletized Displays', quantity: 4, weight: 1400, requiresTwoPeople: true, over300lbs: true }
-    ],
-    pricingBreakdown: {
-      estimatedDistanceMiles: 14.2,
-      estimatedDriveTimeMins: 28,
-      basePrice: 179,
-      mileageCharge: 11.55,
-      vehicleCharge: 120,
-      laborCharges: 115,
-      surcharges: 50,
-      estimatedTotal: 475.55
-    },
-    status: 'Scheduled'
-  }
-];
+// Empty initial array (no mock data)
+const SAMPLE_QUOTES = [];
 
 /**
  * Gets all saved quotes from storage.
  */
 export function getAllQuotes() {
-  if (typeof window === 'undefined') return SAMPLE_QUOTES;
+  if (typeof window === 'undefined') return [];
   try {
     const raw = localStorage.getItem(QUOTES_STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify(SAMPLE_QUOTES));
-      return SAMPLE_QUOTES;
+      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify([]));
+      return [];
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Filter out old sample mock quotes if present
+    const cleaned = parsed.filter(q => q.customer?.name !== 'Marcus Vance' && q.customer?.name !== 'Sarah Jenkins');
+    if (cleaned.length !== parsed.length) {
+      localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify(cleaned));
+    }
+    return cleaned;
   } catch (err) {
     console.error('Failed to read quotes from localStorage:', err);
-    return SAMPLE_QUOTES;
+    return [];
   }
 }
 
@@ -160,6 +74,16 @@ export function updateQuoteStatus(quoteNumber, newStatus) {
     console.error('Failed to update quote status:', err);
   }
   return updated;
+}
+
+/**
+ * Clears all quotes from storage.
+ */
+export function clearAllQuotes() {
+  try {
+    localStorage.setItem(QUOTES_STORAGE_KEY, JSON.stringify([]));
+  } catch (err) {}
+  return [];
 }
 
 /**
