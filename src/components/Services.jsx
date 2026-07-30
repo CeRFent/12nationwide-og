@@ -14,22 +14,22 @@ const services = [
   {
     title: "Junk Removal",
     description: "Efficient hauling and responsible disposal of unwanted items from residential or commercial properties.",
-    image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=800"
+    image: "/Junk removal.jpeg"
   },
   {
     title: "Small Moving",
     description: "Perfect for apartments, studios, or small offices needing professional transport without full-size moving truck costs.",
-    image: "https://images.unsplash.com/photo-1520038410233-7141be7e6f97?auto=format&fit=crop&q=80&w=800"
+    image: "/Small Moving.jpeg"
   },
   {
     title: "Medical Logistics",
     description: "Specialized transport for medical equipment, specimens, and supplies with strict adherence to safety and timing.",
-    image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&q=80&w=800"
+    image: "/Medical.jpeg"
   },
   {
     title: "Contract Delivery Routes",
     description: "Dedicated recurring delivery solutions for businesses needing consistent last-mile or inter-office transport.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800"
+    image: "/delivery routes.jpeg"
   }
 ];
 
