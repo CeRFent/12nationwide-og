@@ -43,19 +43,20 @@ function AppContent({ isLoading }) {
 
     if (hash) {
       const id = hash.replace('#', '');
-      lenis.scrollTo(0, { immediate: true });
-
-      const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-        const element = document.getElementById(id) || document.getElementById('contact');
-        if (element) {
+      const element = document.getElementById(id);
+      if (element) {
+        lenis.scrollTo(0, { immediate: true });
+        const timer = setTimeout(() => {
+          ScrollTrigger.refresh();
           lenis.scrollTo(element, { offset: -70, duration: 1.2 });
-        }
-      }, 250);
-      return () => clearTimeout(timer);
-    } else {
-      lenis.scrollTo(0, { immediate: true });
+        }, 250);
+        return () => clearTimeout(timer);
+      }
     }
+    
+    // Always land at top of page on initial URL load
+    lenis.scrollTo(0, { immediate: true });
+    window.scrollTo(0, 0);
   }, [pathname, hash, lenis]);
 
   useEffect(() => {

@@ -26,13 +26,19 @@ export default function SmartCalculator() {
   const [activeStep, setActiveStep] = useState(1);
   const [pricingConfig, setPricingConfig] = useState(DEFAULT_PRICING_CONFIG);
 
+  const isFirstRenderRef = useRef(true);
+
   // Load pricing config from local storage (synced with admin settings)
   useEffect(() => {
     setPricingConfig(getPricingConfig());
   }, []);
 
-  // Auto-scroll to top of calculator on step change for smooth mobile UX
+  // Auto-scroll to top of calculator on step change for smooth mobile UX (skips initial page load)
   useEffect(() => {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+      return;
+    }
     const el = document.getElementById('smart-calculator');
     if (el) {
       const topOffset = el.getBoundingClientRect().top + window.scrollY - 80;
