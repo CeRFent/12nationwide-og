@@ -33,10 +33,10 @@ const premiumResources = [
     bullets: [
       'Cost per mile logic',
       'Profitable load selection secrets',
-      'Advanced business credit building',
-      'Subcontracting and route delegation',
+      'Direct contract outreach scripts',
+      'Hiring your first driver and adding a second route',
       'Commercial insurance and compliance',
-      'Scaling your transport fleet'
+      'Scaling your delivery business'
     ],
     checkoutUrl: '/checkout',
     btnText: 'Buy Now — $27'

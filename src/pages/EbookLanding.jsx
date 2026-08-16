@@ -12,44 +12,64 @@ const tickerItems = [
 const tocItems = [
   {
     num: '01',
-    title: 'Foundation & Vehicle Income',
-    desc: 'Which vehicle earns the most net profit, how to calculate cost-per-mile, and the 90-day upgrade rule — based on data, not YouTube screenshots.'
+    title: 'Choosing the Right Vehicle',
+    desc: 'Match your vehicle to the work — car, SUV, cargo van, Sprinter van, or box truck — plus an upgrade decision checklist and inspection steps before you buy or lease.'
   },
   {
     num: '02',
-    title: 'Business Setup & Insurance',
-    desc: 'Sole prop vs. LLC, how to open a business account, and the insurance gaps that can wipe out a year of earnings in a single accident.'
+    title: 'Set Up Like a Business',
+    desc: 'Sole prop vs. LLC vs. C-Corp, opening a business bank account, required licenses and permits, and the insurance questions that protect you before your first delivery.'
   },
   {
     num: '03',
-    title: 'Apps, Medical Courier & Contracts',
-    desc: 'Platform stacking, STAT medical runs, pharmacy circuits, and cold outreach scripts to land your first direct client this week.'
+    title: 'Making Money',
+    desc: 'Platform stacking and peak-hour timing, plus the bad-job decision rules that keep you from taking work that quietly loses money.'
   },
   {
     num: '04',
-    title: 'Profit Math & Route Planning',
-    desc: 'Deadhead mile control, route density math, and the job acceptance calculator that separates profitable routes from expensive traps.'
+    title: 'Medical Courier Work',
+    desc: 'HIPAA and bloodborne pathogens training, the documents you need, and a sample medical route week from pickup to payout.'
   },
   {
     num: '05',
-    title: 'Weekly Income System',
-    desc: 'Beginner → intermediate → advanced roadmap with a sample weekly schedule combining platform work, routes, and direct contracts.'
+    title: 'Direct Contracts',
+    desc: 'A cold-outreach phone script, which local businesses to approach, and how to price and lock in repeat contract work.'
   },
   {
     num: '06',
-    title: 'Worksheets & Action Tools',
-    desc: 'Daily profit tracker, weekly profit review, vehicle expense worksheet, client outreach tracker, and a driver self-audit — all printable.'
+    title: 'Profit Control',
+    desc: 'Revenue vs. profit, true cost-per-mile, and cutting deadhead miles with smarter route density and planning.'
+  },
+  {
+    num: '07',
+    title: 'Job Decisions',
+    desc: 'The job acceptance calculator and a profit-first framework for deciding which jobs are worth taking before you drive.'
+  },
+  {
+    num: '08',
+    title: 'Mistakes That Kill Profit',
+    desc: 'The most common profit leaks, a mistake-consequence-fix breakdown, and a self-audit to catch them early.'
+  },
+  {
+    num: '09',
+    title: 'Weekly Income System',
+    desc: 'A beginner-to-intermediate roadmap with a sample weekly schedule built to hit consistent $1,000+ gross weeks.'
+  },
+  {
+    num: '10',
+    title: 'Scaling',
+    desc: 'Hiring your first driver, adding a second route, a scale-readiness checklist, and the printable trackers to run it all.'
   }
 ];
 
 const lessons = [
   { text: '<strong>Why gross revenue is a trap</strong> — and how to calculate true net profit after every expense' },
-  { text: '<strong>The 90-day upgrade rule</strong> — the only data-driven way to know when to buy a bigger vehicle' },
-  { text: '<strong>Medical courier requirements</strong> — HIPAA, chain-of-custody, bloodborne training, $25–$45/hr work' },
+  { text: '<strong>The vehicle upgrade checklist</strong> — a clear, data-driven way to know when it\'s time to buy a bigger vehicle' },
+  { text: '<strong>Medical courier requirements</strong> — HIPAA and bloodborne pathogens training, required documents, and how to land the work' },
   { text: '<strong>The phone script</strong> that helped one driver land 3 direct contracts from 47 cold visits' },
-  { text: '<strong>Route density math</strong> — why a $200 dense route beats a $300 scattered day every time' },
+  { text: '<strong>Route density math</strong> — why a tighter, denser route beats a scattered high-mileage day every time' },
   { text: '<strong>Tax reserve system</strong> — move 25–30% weekly so April never blindsides you' },
-  { text: '<strong>When to hire your first subcontractor</strong> — and how to profit $145+/week per route without driving' },
+  { text: '<strong>When to hire your first driver</strong> — and how to profit from a second route without driving it yourself' },
   { text: '<strong>Personal insurance won\'t cover you</strong> — get the right commercial policy before your first delivery' }
 ];
 
@@ -177,7 +197,7 @@ export default function EbookLanding() {
             What's <span className="text-brand-accent">Inside</span>
           </h2>
           <p className="text-white/60 text-center mt-6 max-w-[600px] mx-auto">
-            Six parts covering every stage — from your first delivery to scaling with subcontractors and multiple vehicles.
+            Ten chapters covering every stage — from choosing your first vehicle to scaling with your first hire and a second route.
           </p>
         </div>
 
@@ -350,7 +370,7 @@ export default function EbookLanding() {
                 <span className="text-brand-accent font-mono text-xs font-bold bg-brand-accent/10 px-2.5 py-1 rounded">+$1,450/wk Net</span>
               </div>
               <p className="text-white/50 text-sm leading-relaxed">
-                "Was running generic apps earning gross $800 but driving 1,200 miles a week. Used the HIPAA Medical scripts in Section 3 to stack two local lab routes. Now averaging $1,450/week net, and I've cut my driving miles in half."
+                "Was running generic apps earning gross $800 but driving 1,200 miles a week. Used the HIPAA requirements in Chapter 4 to stack two local lab routes. Now averaging $1,450/week net, and I've cut my driving miles in half."
               </p>
             </div>
 
@@ -410,7 +430,7 @@ export default function EbookLanding() {
               </div>
             </div>
             <div className="mt-8 text-center text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
-              Calculated using the Ledger Worksheets included in Part 6 of the Blueprint.
+              Calculated using the Weekly Profit Review worksheet included in Chapter 10 of the Blueprint.
             </div>
           </div>
         </div>
