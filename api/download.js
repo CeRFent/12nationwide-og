@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     res.writeHead(200, {
       'Content-Type': 'application/pdf',
       'Content-Length': stat.size,
-      'Content-Disposition': 'attachment; filename="Driver_Income_Blueprint.pdf"',
+      'Content-Disposition': 'attachment; filename="Vehicle_Income_Blueprint.pdf"',
     });
 
     const readStream = fs.createReadStream(filePath);

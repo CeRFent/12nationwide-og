@@ -97,10 +97,10 @@ export default function EbookLanding() {
             Driver Business Education
           </div>
           <h1 className="font-display font-black text-[clamp(60px,10vw,110px)] leading-[0.9] uppercase mb-8">
-            Driver<br /><span className="text-brand-accent">Income</span><br />Blueprint
+            Vehicle<br /><span className="text-brand-accent">Income</span><br />Blueprint
           </h1>
           <p className="text-lg md:text-xl text-white/60 leading-relaxed mb-10 max-w-[500px]">
-            A practical 80-page system for finding better-paying delivery work, controlling expenses, and building toward $1,000 weeks — with the real-world math, systems, and client outreach scripts to keep it.
+            A practical 72-page system for finding better-paying delivery work, controlling expenses, and building toward $1,000 weeks — with the real-world math, systems, and client outreach scripts to keep it.
           </p>
           
           <div className="flex items-center gap-6 mb-10 flex-wrap">
@@ -140,11 +140,11 @@ export default function EbookLanding() {
           <div className="relative group">
             <img 
               src="/ebook-cover.jpeg" 
-              alt="Driver Income Blueprint" 
+              alt="Vehicle Income Blueprint"
               className="w-full max-w-[400px] rounded-lg shadow-[0_40px_80px_rgba(0,0,0,0.6)] group-hover:rotate-y-5 transition-transform duration-500"
             />
             <div className="absolute -bottom-6 -right-6 bg-brand-accent text-brand-bg font-display font-black text-2xl p-4 leading-tight text-center shadow-xl">
-              80<br />PAGES
+              72<br />PAGES
             </div>
           </div>
         </motion.div>
@@ -154,7 +154,7 @@ export default function EbookLanding() {
       <section className="bg-brand-card border-y border-brand-border py-12 px-6">
         <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { num: '80', label: 'Pages of Field Tactics' },
+            { num: '72', label: 'Pages of Field Tactics' },
             { num: '6', label: 'Income Strategies' },
             { num: '20+', label: 'Worksheets & Action Tools' },
             { num: '$1K', label: 'Weekly Gross Target' }
@@ -282,7 +282,7 @@ export default function EbookLanding() {
               BEHIND THE <span className="text-brand-accent">BLUEPRINT</span>
             </h2>
             <p className="text-white/60 leading-relaxed mb-6">
-              This guide was created by an independent courier with 3 years of active, real-time experience on the road. Instead of theoretical courses or generic advice from online gurus, the <strong>Driver Income Blueprint</strong> is built entirely on real street data, verified routing workflows, and the exact spreadsheets used to run a profitable delivery operation.
+              This guide was created by an independent courier with 3 years of active, real-time experience on the road. Instead of theoretical courses or generic advice from online gurus, the <strong>Vehicle Income Blueprint</strong> is built entirely on real street data, verified routing workflows, and the exact spreadsheets used to run a profitable delivery operation.
             </p>
             <p className="text-white/60 leading-relaxed mb-8">
               After navigating the learning curve, stacking platforms, and optimizing local delivery routes, I compiled the exact scripts, worksheets, and calculators into a printable action plan so other independent drivers can skip the costly trial-and-error.
@@ -423,7 +423,7 @@ export default function EbookLanding() {
             whileTap={{ scale: 0.95 }}
             className="inline-block font-display font-bold text-lg tracking-[2px] uppercase text-brand-bg bg-brand-accent px-12 py-5 no-underline shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all"
           >
-            Download Driver Blueprint — $27
+            Download Vehicle Blueprint — $27
           </MotionLink>
           <div className="mt-3 text-[11px] text-brand-accent/80 font-bold uppercase tracking-wider">
             ⚡ Instant Download · Digital Product (All Sales Final)
@@ -458,7 +458,7 @@ export default function EbookLanding() {
             Ready to Build Your<br /><span className="text-brand-accent">Driver Business?</span>
           </h2>
           <p className="text-white/60 text-lg md:text-xl mb-12 max-w-[600px] mx-auto leading-relaxed">
-            Get the full 80-page system instantly. No fluff. No subscription. Just the logistics math and direct contract frameworks that move the needle.
+            Get the full 72-page system instantly. No fluff. No subscription. Just the logistics math and direct contract frameworks that move the needle.
           </p>
           
           <div className="font-display font-black text-8xl text-brand-accent mb-2">$27</div>
@@ -481,7 +481,7 @@ export default function EbookLanding() {
           </div>
 
           <div className="mt-12 flex justify-center gap-8 md:gap-16 flex-wrap grayscale opacity-50">
-            {['Instant PDF Download', '80-Page Field Guide', 'No Subscription', 'Any Device'].map((badge, i) => (
+            {['Instant PDF Download', '72-Page Field Guide', 'No Subscription', 'Any Device'].map((badge, i) => (
               <div key={i} className="flex items-center gap-2 text-[11px] font-display font-bold tracking-widest uppercase text-white">
                 <span className="text-brand-accent">✓</span> {badge}
               </div>

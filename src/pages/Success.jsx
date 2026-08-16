@@ -94,7 +94,7 @@ export default function Success() {
             Payment<br /><span className="text-brand-accent">Confirmed</span>
           </h1>
           <p className="text-xl text-white/60 mb-12 max-w-[600px] mx-auto leading-relaxed">
-            Thank you for your purchase! Your journey to building a profitable driver business starts now. You can download your copy of the <strong>Driver Income Blueprint</strong> below.
+            Thank you for your purchase! Your journey to building a profitable driver business starts now. You can download your copy of the <strong>Vehicle Income Blueprint</strong> below.
           </p>
         </motion.div>
 
@@ -113,8 +113,8 @@ export default function Success() {
               />
             </div>
             <div className="w-full md:w-2/3">
-              <h3 className="font-display font-bold text-2xl uppercase text-brand-white mb-2">Driver Income Blueprint</h3>
-              <p className="text-white/40 text-sm mb-6 uppercase tracking-widest font-display font-bold">PDF Format · 80 Pages · 12MB</p>
+              <h3 className="font-display font-bold text-2xl uppercase text-brand-white mb-2">Vehicle Income Blueprint</h3>
+              <p className="text-white/40 text-sm mb-6 uppercase tracking-widest font-display font-bold">PDF Format · 72 Pages · 26MB</p>
               
               <motion.a 
                 whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(255,215,0,0.5)' }}

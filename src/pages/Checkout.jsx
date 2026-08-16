@@ -50,7 +50,7 @@ export default function Checkout() {
             Secure <span className="text-brand-accent">Checkout</span>
           </h1>
           <p className="text-white/60 font-display tracking-widest uppercase text-sm">
-            Driver Income Blueprint · One-Time Payment
+            Vehicle Income Blueprint · One-Time Payment
           </p>
         </motion.div>
 

@@ -26,10 +26,10 @@ const freeResources = [
 
 const premiumResources = [
   {
-    title: 'Driver Income Blueprint',
+    title: 'Vehicle Income Blueprint',
     badge: 'Premium Masterclass',
     price: '$27',
-    desc: 'The comprehensive 80-page master handbook detailing the road from solo driver to fleet scaling.',
+    desc: 'The comprehensive 72-page master handbook detailing the road from solo driver to fleet scaling.',
     bullets: [
       'Cost per mile logic',
       'Profitable load selection secrets',
@@ -178,7 +178,7 @@ export default function Guide() {
                   {resource.title}
                 </h3>
                 <p className="text-white/60 text-sm leading-relaxed max-w-md font-medium">
-                  {resource.desc} Ready for the next step? Get the Driver Income Blueprint and learn how to build a profitable courier business from the ground up.
+                  {resource.desc} Ready for the next step? Get the Vehicle Income Blueprint and learn how to build a profitable courier business from the ground up.
                 </p>
               </div>
 
