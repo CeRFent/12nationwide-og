@@ -1,4 +1,24 @@
+import { Link, useLocation } from 'react-router-dom';
+import { useLenis } from '../hooks/useLenis.jsx';
+
 export default function Footer() {
+  const lenis = useLenis();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  const handleLinkClick = (e, href) => {
+    if (href.startsWith('/#') && isHomePage) {
+      e.preventDefault();
+      const id = href.replace('/#', '');
+      const element = document.getElementById(id);
+      if (element && lenis) {
+        lenis.scrollTo(element, { offset: -70, duration: 1.2 });
+      } else if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <>
       <footer className="bg-[#0d0e12] px-6 md:px-[60px] py-[70px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 border-t border-brand-accent/12">
@@ -29,7 +49,7 @@ export default function Footer() {
               { name: 'Contact', href: '/contact' },
               { name: 'Staff Portal', href: '/admin' }
             ].map((item) => (
-              <a key={item.name} href={item.href} className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item.name}</a>
+              <Link key={item.name} to={item.href} onClick={(e) => handleLinkClick(e, item.href)} className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item.name}</Link>
             ))}
           </div>
         </div>
@@ -38,7 +58,7 @@ export default function Footer() {
           <h4 className="font-display font-bold text-[11px] tracking-[2.5px] uppercase text-white/30 mb-[18px]">Services</h4>
           <div className="flex flex-col gap-2.5">
             {['Courier Service', 'White Glove Delivery', 'Junk Removal', 'Small Moving', 'Medical Logistics', 'Contract Delivery'].map((item) => (
-              <a key={item} href="#services" className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item}</a>
+              <Link key={item} to="/#services" onClick={(e) => handleLinkClick(e, '/#services')} className="text-[14px] text-white/50 no-underline hover:text-brand-accent transition-colors">{item}</Link>
             ))}
           </div>
         </div>

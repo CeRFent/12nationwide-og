@@ -281,8 +281,8 @@ export default function Guide() {
             If you need reliable logistics services—including local courier runs, hotshot delivery, heavy freight, or consulting—calculate your shipping rate instantly.
           </p>
           <div className="pt-2">
-            <Link 
-              to="/#quote" 
+            <Link
+              to="/#contact"
               className="inline-block bg-brand-cyan hover:bg-[#4df3ff] text-brand-bg font-display font-black text-sm tracking-[2.5px] uppercase px-10 py-4.5 rounded-lg shadow-[0_0_20px_rgba(0,229,255,0.25)] transition-all no-underline"
             >
               Calculate Delivery Rates →
